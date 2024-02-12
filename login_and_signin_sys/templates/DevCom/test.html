@@ -1,0 +1,11 @@
+<form method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">Save</button>
+</form>
+
+{% if request.user.userprofile.profile_picture %}
+  <img src="{{ request.user.userprofile.profile_picture.url }}" alt="Profile Picture">
+{% else %}
+  <p>No profile picture found.</p>
+{% endif %}

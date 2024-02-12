@@ -1,0 +1,274 @@
+
+
+{% load static %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ user_profile.user.username }}</title>
+    <link rel="stylesheet" href="design_view.css">
+</head>
+
+<style type="text/css">
+    
+*{
+    margin: 0;
+    padding: 0;
+    color: white;
+    text-style: italic;
+}
+.main{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+body{
+    height: 100vh;
+    justify-content: center;
+    background: plum;
+}
+.viewer{
+    display: flex;
+    position: relative;
+    width: auto;
+    height: 400px;
+    background: url({% static 'bg.jpg' %});
+    object-fit: fill;
+    background-size: cover;
+}
+.viewer .back-view{
+    width: 200px;
+    margin-top: 250px;
+    margin-left: 10px;
+    height: 200px;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    padding: 3px;
+    background-color: #fff;
+    border-radius: 100px;
+}
+.back-view .img1{
+    display: flex;
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    justify-self: center;
+    background-color: #fff;
+    border-radius: 100px;
+}
+.remark{
+    display: inline;
+    background-color: transparent;
+    height: fit-content;
+    align-content: center;
+    border-radius: 12px;
+    width: 350px;
+    padding: 4px;
+    margin-left: auto;
+    margin-top: auto;
+}
+.remark .love{
+    color: #fff;
+    width: 40px;
+    position: relative;
+    height: 40px;
+}
+.remark .Posts{
+    color: #fff;
+    width: 40px;
+    margin-right: 10px;
+    position: relative;
+    height: 40px;
+}
+.remark .follow{
+    position: relative;
+    width: 45px;
+    font-weight: 400px;
+    cursor: pointer;
+    height: 45px;
+    background-color: blueviolet;
+    margin-left: 10px;
+    border-radius: 10px;
+    border: 2px solid;
+    border-color: rgba(0, 0, 0, 0.1); 
+    backdrop-filter: blur(10px);
+    width: 80px;
+
+}
+
+.remark .following{
+    position: inline;
+    padding-left: 20px;
+    color: #fff;
+    justify-self: center;
+    width: 40px;
+    height: 40px;
+}
+.remark .follow:hover{
+    color: rgb(216, 202, 216);
+}
+.viewer .tag{
+    position: absolute;
+    background-color: transparent;
+    padding-left: 30px;
+    margin-top: 340px;
+    margin-left: 220px;
+    justify-content: center;
+}
+.tag .ink{
+    position: relative;
+    margin-top: 100px;
+    color: #fff;
+    font-weight: 500;
+    font-size: 20px;
+    text-decoration: None;
+}
+.user-posts{
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    background: linear-gradient(to bottom right, rgb(164, 56, 226), #fff);;
+    border-radius: 12px;
+    width: 70%;
+    padding: 10px;
+    height: auto;
+    margin-bottom: 250px;
+    justify-content: left;
+    align-items:start;
+    top: 120px
+}
+.user-posts .post_content img{
+    width: 30%;
+    padding: 5px;
+    height: auto;
+    border-radius: 12px;
+}
+
+.post_content {
+
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.post1 {
+
+    flex: 0 0 200px;    
+
+
+}
+
+.post1 img {
+
+
+  width: 100%;
+  height: auto;
+}
+
+.post_content ul {
+
+    list-style: none;
+}
+
+p {
+
+    color:white;
+
+    padding-top:10px
+
+}
+
+a {
+
+    color: white;
+
+    text-decoration: None;
+
+    padding: 0.5px
+
+}
+
+</style>
+
+<body>
+
+        <form method="POST", action="/follow">
+
+            {% csrf_token %}
+
+            <div class="viewer">
+
+                   <div class="back-view">
+            <img class="img1" src="{{ user_profile.profileimg.url}}" alt="back image">
+        </div>
+
+                <div class="remark">
+                    <span class="Posts">{{ user_post_length }}| Posts</span>
+                    <span class="love">{{ user_following }}| Following</span>
+                    <span class="following"> {{ user_followers }}| Followers</span>
+                    <input type="hidden" value="{{ user.username }}" name="follower">
+
+                    <input type="hidden" value="{{ user_obj.username }}" name="user">
+
+                    {% if user_obj.username == user.username %}
+
+                    <a href="/user_page" class="follow">Account Settings</a>
+
+                    {% elif user_obj != user.username %}
+
+
+
+                    <button class="follow" type="submit">{{ button_text }}</button>
+
+                    {% endif %}
+
+                </div>
+
+                <div class="tag">
+                    <a class="ink" href="/">Home</a>
+                    <br>
+                    <p>@{{ user_profile.user.username }}</p>
+
+                </div>
+            </div>
+
+        </form>
+
+    </div>
+    <div class="main">
+
+            <div class="user-posts">
+
+                {% for post in user_posts %}
+
+                <div class="post_content">
+
+                    <img class="post1" src="{{ post.image.url}}" alt="post"><br>
+
+                    <ul>
+
+                        <li>Description | {{ post.caption }}</li>
+
+                        <br>
+
+                        <li>Created on | {{ post.created_at }}</li>
+
+                        <br>
+
+                        <li>Liked by | {{ post.no_of_likes }} person</li>
+
+                    </ul>
+
+
+                </div>
+
+        {% endfor %}
+        </div>
+
+
+    </div>
+</body>
+</html>

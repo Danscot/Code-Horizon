@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+
+    <style type="text/css">
+        *{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    
+}
+
+body{
+    height: 100vh;
+    position: relative;
+    align-items: center;
+    background: linear-gradient(to bottom right, rgb(164, 56, 226), #fff);
+    backdrop-filter: blur(20px);
+    display: flex;
+    justify-content: center;
+}
+.Profile-card{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 320px;
+    width: 120%;
+    border-radius: 12px;
+    padding: 25px;
+    height: auto;
+    background-color: #fff;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+.Profile-card::before {
+    content: "";
+    position: absolute;
+    border-radius: 12px 12px 0 0;
+    top: 0;
+    left: 0;
+    height: 25%;
+    width: 100%;
+    background-color: rgb(155, 80, 204)
+}
+.image{
+    position: relative;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    background-color: rgb(155, 80, 204);
+    padding: 3px;
+    margin-bottom: 10px;
+}
+.image .Profile-pic{
+    position: relative;
+    height: 100%;
+    border-radius: 50%;
+    margin: auto;
+    width: 100%;
+    padding: 2px 2px;
+    object-fit: cover;
+    border: 3px solid white;
+}
+.Profile-card .text-data{
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    align-items: center;
+    color: #333;
+}
+.text-data .name{
+    font-size: 22px;
+    font-weight: 500;
+}
+.text-data .job{
+    font-size: 15px;
+    font-weight: 400;
+}
+.description .message-box{
+    padding-top: 10px;
+    font-size: 20px;
+    border-radius: 7px;
+    max-width: 320px;
+    border: 2px solid rgb(155, 80, 204) ;
+    width: 310px;
+    height: 100px;
+    padding-left: 10px;
+    padding-right: 10px;
+
+}
+.Input-description{
+    padding-top: 10px;
+    border: 5px rgb(155, 80, 204);
+    border-radius: 20px;
+
+}
+.Input-description .my-input{
+    width: 310px;
+    height: 100px;
+    padding: 10px 10px;
+    padding-top: 10px;
+    font-size: 20px;
+    font-family: 'Courier New';
+    resize: none;
+    text-align: top;
+}
+label{
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    width: 50px;
+    padding-top: 10px;
+    background-color: transparent;
+    border-radius: 25px;
+    align-content: center;
+    margin-right: 10px;
+    border: 2px;
+    cursor: pointer;
+    backdrop-filter: blur(10px);
+}
+label:hover{
+    background-color: rgba(0, 0, 0, 0.1);
+}
+input{
+    display: none;
+}
+.Profile-card .new-but{
+    display: flex;
+    align-items: center;
+    margin-top: 7px;
+}
+.new-but .btn{
+    border-radius: 25px;
+    margin: 0 50px;
+    font-weight: 500;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+    font-family: Cambria;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: #fff;
+    border: none;
+    padding: 8px 24px;
+    font-size: 20px;
+    background-color: rgb(155, 80, 204);
+}
+.new-but .btn:hover{
+    background-color: #9369a7;
+}
+.But-change{
+    display: flex;
+    align-content: left;
+    position: absolute;
+    margin-right: 40px;
+    margin-top: 50px;
+    bottom: 70px;
+    margin-left: 200px;
+}
+.But-change .change{
+    height: 50px;
+    width: 50px;
+    background-color: transparent;
+    border-radius: 25px;
+    align-content: center;
+    margin-right: 10px;
+    border: none;
+    cursor: pointer;
+    backdrop-filter: blur(10px);
+}
+.But-change .change:hover{
+    background-color: #d7b8e4;
+}
+.Remark{
+    display: flex;
+    align-content: center;
+    font-size: 20px;
+    justify-content: center;
+    margin-right: 20px;
+}
+.Remark .Love{
+
+    padding: 0 30px;
+    text-align: left;
+
+}
+a {
+
+    text-decoration: none;
+
+    color: black;
+
+    border-radius: 25px;
+    margin: 0 50px;
+    font-weight: 500;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+    font-family: Cambria;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: #fff;
+    border: none;
+    padding: 8px 24px;
+    font-size: 20px;
+    background-color: rgb(155, 80, 204);
+
+
+}
+
+
+.btn {
+
+    border-radius: 10px;
+}
+
+    </style>
+
+
+</head>
+<body>
+
+<form method="POST" action="" enctype="multipart/form-data">
+
+        {% csrf_token %}
+
+        <div class="Profile-card">
+
+            <div class="image">
+                <img  value='{{ context2.user_profile.profileimg }}' src="{{ context2.user_profile.profileimg.url }}"  class="Profile-pic" id="profile.pic">
+            </div>
+            <div class="text-data">
+                <span class="name">{{ context1.user.username }}</span>
+                <span class="job">Coding Is Fun</span>
+            <div class="But-change">
+                <label for="input_file">Edit</label>
+                <input type="file" accept="image/jpeg, image/png, image/jpg", id="input_file" name="image">
+            </div>
+            <div class="Remark">
+                <a href="/"><p class="Love">Home</p></a>
+            </div>
+            </div>
+            <div class="description">
+                <p>Description:</p>
+                <div class="message-box" id="message">{{ context2.user_profile.bio }}</div>
+            </div>
+            <div class="Input-description">
+                <textarea class="my-input" placeholder="Enter your description" id="mine" name="bio"></textarea>
+            </div>
+            <div class="new-but">
+                <button onclick="displaytext()" class="btn">Submit</button>
+            </div>
+
+        </div>
+
+    </form>
+
+<script>
+    let image = document.getElementById("profile.pic");
+    let inputfile = document.getElementById("input_file");
+
+    inputfile.onchange = function(){
+        image.src = URL.createObjectURL(inputfile.files[0]);
+    }
+    function displaytext(){
+        var mytextarea = document.getElementById("mine");
+        var text = mytextarea.value;
+        var messagebox = document.getElementById("message");
+        messagebox.innerHTML = text;
+    }
+</script>
+
+</body>
+</html>
